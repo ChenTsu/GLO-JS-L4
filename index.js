@@ -95,12 +95,14 @@ let appData = {
     }
     items = items.split(',');
       items.forEach((el, i, arr) => {arr[i] = el.trim();});
-      appData.income = items;
+      items = items.filter( isNotNumeric );
+    appData.income = items;
     
     items = prompt('Может что-то ещё?', '');
       items = items.split(',');
       items.forEach((el, i, arr) => {arr[i] = el.trim();});
-      appData.income.concat(items);
+      items = items.filter( isNotNumeric );
+    appData.income.concat(items);
     
     appData.income = appData.income.filter(isNotEmptyParam);
     appData.income.sort();
@@ -137,4 +139,12 @@ function isEmptyParam(param) {
 
 function isNotEmptyParam(param) {
   return !isEmptyParam(param);
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function isNotNumeric(n) {
+  return  !( !isNaN(parseFloat(n)) && isFinite(n) );
 }
